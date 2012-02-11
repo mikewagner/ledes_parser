@@ -26,7 +26,7 @@ module Ledes
       @lines ||= begin
         lines = @input.respond_to?(:read) ? @input.read : @input
         lines.gsub(/\n|\r/, '')
-        lines.split('[]')
+        lines.split('[]').map(&:strip).delete_if { |l| l.empty? }
       end
     end
 

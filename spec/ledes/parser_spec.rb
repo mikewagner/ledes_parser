@@ -30,7 +30,8 @@ describe Ledes::Parser do
     context "from string" do
 
       before do
-        @parser = Ledes::Parser.new( file.read )
+        string = "LEDES1998B[]INVOICE_DATE|INVOICE_NUMBER|CLIENT_ID[] "
+        @parser = Ledes::Parser.new( string )
       end
 
       it "should return contents as array" do
@@ -38,7 +39,7 @@ describe Ledes::Parser do
       end
 
       it "should return format specification as first element" do
-        @parser.read.first.should == 'LEDES1998B'
+        @parser.read.should == ['LEDES1998B', 'INVOICE_DATE|INVOICE_NUMBER|CLIENT_ID']
       end
 
 
