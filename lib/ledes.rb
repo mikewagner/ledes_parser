@@ -1,4 +1,5 @@
 require 'ledes/parser'
+require 'ledes/exceptions'
 
 module Ledes
 
