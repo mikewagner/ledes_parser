@@ -8,7 +8,7 @@ describe Ledes::Parser do
 
   end
 
-  describe "#read" do
+  describe "#contents" do
 
     let(:file) { fixture(:ledes) }
 
@@ -19,11 +19,11 @@ describe Ledes::Parser do
       end
 
       it "should return contents as array" do
-        @parser.read.should be_instance_of Array
+        @parser.contents.should be_instance_of Array
       end
 
       it "should return format specification as first element" do
-        @parser.read.first.should == 'LEDES1998B'
+        @parser.contents.first.should == 'LEDES1998B'
       end
 
     end

@@ -53,8 +53,7 @@ module Ledes
       raise InvalidHeader, 'File contains invalid header information'  unless header == HEADERS.join('|')
     end
 
-
-    def read
+    def contents
       @lines ||= begin
         lines = @input.respond_to?(:read) ? @input.read : @input
         lines.gsub(/\n|\r/, '')
