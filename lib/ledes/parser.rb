@@ -61,7 +61,5 @@ module Ledes
       end
     end
 
-
-
   end
 end
