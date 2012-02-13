@@ -51,7 +51,9 @@ module Ledes
       raise InvalidFormat, 'File contains incorrect format specification' unless format == FORMAT
       header = contents.shift
       raise InvalidHeader, 'File contains invalid header information'  unless header == HEADERS.join('|')
-      contents.map { Ledes::Entry.new }
+      contents.map do |line|
+        Ledes::Entry.new map_line_to_headers(line)
+      end
     end
 
     def contents
