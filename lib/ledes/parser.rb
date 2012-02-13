@@ -47,10 +47,11 @@ module Ledes
     end
 
     def parse
-      format = contents[0]
+      format = contents.shift
       raise InvalidFormat, 'File contains incorrect format specification' unless format == FORMAT
-      header = contents[1]
+      header = contents.shift
       raise InvalidHeader, 'File contains invalid header information'  unless header == HEADERS.join('|')
+      contents.map { Ledes::Entry.new }
     end
 
     def contents

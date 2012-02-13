@@ -39,27 +39,42 @@ describe Ledes::Parser do
         @parser.contents.should == ['LEDES1998B', 'INVOICE_DATE|INVOICE_NUMBER|CLIENT_ID']
       end
 
-
     end
 
   end
 
   describe "#parse" do
-   
-    it "should raise error when file contains invalid format" do
-      file = fixture(:ledes_with_invalid_format)
-      @parser = Ledes::Parser.new( file )
-      lambda {
-        @parser.parse
-      }.should raise_error(Ledes::InvalidFormat)
+ 
+    context "invalid input" do
+
+      it "should raise error when file contains invalid format" do
+        file = fixture(:ledes_with_invalid_format)
+        @parser = Ledes::Parser.new( file )
+        lambda {
+          @parser.parse
+        }.should raise_error(Ledes::InvalidFormat)
+      end
+
+      it "should raise error when file contains invalid headers" do
+        file = fixture(:ledes_with_invalid_headers)
+        @parser = Ledes::Parser.new( file )
+        lambda {
+          @parser.parse
+        }.should raise_error(Ledes::InvalidHeader)
+      end
+    
     end
 
-    it "should raise error when file contains invalid headers" do
-      file = fixture(:ledes_with_invalid_headers)
-      @parser = Ledes::Parser.new( file )
-      lambda {
-        @parser.parse
-      }.should raise_error(Ledes::InvalidHeader)
+    context "valid input" do
+
+      let(:file) { fixture(:ledes_single_line_item) }
+
+      it "should return array of entries" do
+        entry = Ledes::Entry.new
+        Ledes::Entry.stub(:new).and_return(entry)
+        Ledes::Parser.new(file).parse.should == [entry]
+      end
+
     end
 
   end
