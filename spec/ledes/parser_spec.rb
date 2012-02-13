@@ -43,6 +43,45 @@ describe Ledes::Parser do
 
   end
 
+  describe "#map_line_to_headers" do
+
+    let (:line) {
+      [ '19990225',
+        '96542',
+        '00711',
+        '0528',
+        '700',
+        '19990101',
+        '19990131',
+        'For services rendered',
+        '1',
+        'F',
+        '2.00',
+        '0',
+        '700',
+        '19990115',
+        'L510',
+        '',
+        'A102',
+        '22547',
+        'Research attorney\'s fees, Trial pleading',
+        '24-6437381',
+        '350','Arnsley, Robert',
+        'PT',
+        '423-987' ]
+    }
+
+    it "should split the line and map values to headers" do
+      parser = Ledes::Parser.new ''
+      result = parser.map_line_to_headers(line.join('|'))
+      result.keys.each_with_index do |key, index|
+        result[key].should == line[index]
+      end
+    end
+
+
+  end
+
   describe "#parse" do
  
     context "invalid input" do

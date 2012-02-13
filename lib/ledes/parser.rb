@@ -61,6 +61,13 @@ module Ledes
         lines.split('[]').map(&:strip).delete_if { |l| l.empty? }
       end
     end
+  
+
+    def map_line_to_headers(line)
+      Hash[HEADERS.zip line.split('|')]
+    end
+
+
 
   end
 end
