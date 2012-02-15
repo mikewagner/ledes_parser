@@ -3,32 +3,32 @@ module Ledes
 
     FORMAT = 'LEDES1998B'
 
-    HEADERS = [
-      'INVOICE_DATE',
-      'INVOICE_NUMBER',
-      'CLIENT_ID',
-      'LAW_FIRM_MATTER_ID',
-      'INVOICE_TOTAL',
-      'BILLING_START_DATE',
-      'BILLING_END_DATE',
-      'INVOICE_DESCRIPTION',
-      'LINE_ITEM_NUMBER',
-      'EXP/FEE/INV_ADJ_TYPE',
-      'LINE_ITEM_NUMBER_OF_UNITS',
-      'LINE_ITEM_ADJUSTMENT_AMOUNT',
-      'LINE_ITEM_TOTAL',
-      'LINE_ITEM_DATE',
-      'LINE_ITEM_TASK_CODE',
-      'LINE_ITEM_EXPENSE_CODE',
-      'LINE_ITEM_ACTIVITY_CODE',
-      'TIMEKEEPER_ID',
-      'LINE_ITEM_DESCRIPTION',
-      'LAW_FIRM_ID',
-      'LINE_ITEM_UNIT_COST',
-      'TIMEKEEPER_NAME',
-      'TIMEKEEPER_CLASSIFICATION',
-      'CLIENT_MATTER_ID'
-    ]
+    HEADERS = {
+      :invoice_date => 'INVOICE_DATE',
+      :invoce_number => 'INVOICE_NUMBER',
+      :client_id => 'CLIENT_ID',
+      :law_firm_matter_id => 'LAW_FIRM_MATTER_ID',
+      :invoice_total => 'INVOICE_TOTAL',
+      :billing_start_date => 'BILLING_START_DATE',
+      :billing_end_date => 'BILLING_END_DATE',
+      :invoice_description => 'INVOICE_DESCRIPTION',
+      :line_item_number => 'LINE_ITEM_NUMBER',
+      :exp_fee_inv_adj_type => 'EXP/FEE/INV_ADJ_TYPE',
+      :line_item_number_of_units => 'LINE_ITEM_NUMBER_OF_UNITS',
+      :line_item_adjustment_amount => 'LINE_ITEM_ADJUSTMENT_AMOUNT',
+      :line_item_total => 'LINE_ITEM_TOTAL',
+      :line_item_date => 'LINE_ITEM_DATE',
+      :ine_item_task_code => 'LINE_ITEM_TASK_CODE',
+      :line_item_expense_code => 'LINE_ITEM_EXPENSE_CODE',
+      :line_item_activity_code => 'LINE_ITEM_ACTIVITY_CODE',
+      :timekeeper_id => 'TIMEKEEPER_ID',
+      :line_item_description => 'LINE_ITEM_DESCRIPTION',
+      :law_firm_id => 'LAW_FIRM_ID',
+      :line_item_unit_cost => 'LINE_ITEM_UNIT_COST',
+      :timekeeper_name => 'TIMEKEEPER_NAME',
+      :timekeeper_classification => 'TIMEKEEPER_CLASSIFICATION',
+      :client_matter_id => 'CLIENT_MATTER_ID'
+    }
 
     attr_accessor :input
 
@@ -50,7 +50,7 @@ module Ledes
       format = contents.shift
       raise InvalidFormat, 'File contains incorrect format specification' unless format == FORMAT
       header = contents.shift
-      raise InvalidHeader, 'File contains invalid header information'  unless header == HEADERS.join('|')
+      raise InvalidHeader, 'File contains invalid header information'  unless header == HEADERS.values.join('|')
       contents.map do |line|
         Ledes::Entry.new map_line_to_headers(line)
       end
@@ -66,7 +66,7 @@ module Ledes
   
 
     def map_line_to_headers(line)
-      Hash[HEADERS.zip line.split('|')]
+      Hash[HEADERS.keys.zip line.split('|')]
     end
 
 
