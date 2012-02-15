@@ -82,6 +82,38 @@ describe Ledes::Parser do
 
   end
 
+  describe "#valid_format?" do
+
+    it "should return true if format valid" do
+      file = fixture(:ledes)
+      parser = Ledes::Parser.new(file)
+      parser.should be_valid_format
+    end
+
+    it "should return false if format invalid" do
+      file = fixture(:ledes_with_invalid_format)
+      parser = Ledes::Parser.new(file)
+      parser.should_not be_valid_format
+    end
+
+  end
+
+  describe "#valid_header?" do
+
+    it "should return true if header valid" do
+      file = fixture(:ledes)
+      parser = Ledes::Parser.new(file)
+      parser.should be_valid_header
+    end
+
+    it "should return false if header invalid" do
+      file = fixture(:ledes_with_invalid_headers)
+      parser = Ledes::Parser.new(file)
+      parser.should_not be_valid_header
+    end
+
+  end
+
   describe "#parse" do
  
     context "invalid input" do

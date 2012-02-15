@@ -47,11 +47,9 @@ module Ledes
     end
 
     def parse
-      format = contents.shift
-      raise InvalidFormat, 'File contains incorrect format specification' unless format == FORMAT
-      header = contents.shift
-      raise InvalidHeader, 'File contains invalid header information'  unless header == HEADERS.values.join('|')
-      contents.map do |line|
+      raise InvalidFormat, 'File contains incorrect format specification' unless valid_format?
+      raise InvalidHeader, 'File contains invalid header information'  unless valid_header?
+      contents[2, contents.length].map do |line|
         Ledes::Entry.new map_line_to_headers(line)
       end
     end
@@ -64,6 +62,14 @@ module Ledes
       end
     end
   
+    def valid_format?
+      contents[0] == FORMAT
+    end
+
+    def valid_header?
+      contents[1] == HEADERS.values.join('|')
+    end
+
 
     def map_line_to_headers(line)
       Hash[HEADERS.keys.zip line.split('|')]
