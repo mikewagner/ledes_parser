@@ -27,9 +27,22 @@ module Ledes
       :time_keeper_classification,
       :client_matter_id
     ]
- 
-    def initialize(attrs = [])
-      @attrs = attrs
+  
+    attr_accessor *ATTRS
+
+    def initialize(attrs = {})
+      self.attributes = attrs
+    end
+
+
+
+    def attributes=(attrs)
+      return if attrs.empty?
+      attrs.each_pair do |key, value|
+        if respond_to?(:"#{key}=")
+          self.send(:"#{key}=", value)
+        end
+      end
     end
 
   end
