@@ -145,7 +145,7 @@ describe Ledes::Parser do
         Ledes::Entry.stub(:new).and_return(entry)
         Ledes::Parser.new(file).parse.should == [entry]
       end
-
+ 
     end
 
   end
