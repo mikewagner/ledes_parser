@@ -59,7 +59,7 @@ module Ledes
     def contents
       @lines ||= begin
         lines = @input.respond_to?(:read) ? @input.read : @input
-        lines.gsub(/\n|\r/, '')
+        lines.gsub!(/\n|\r/, '')
         lines.split('[]').map(&:strip).delete_if { |l| l.empty? }
       end
     end
