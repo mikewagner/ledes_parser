@@ -36,6 +36,13 @@ module Ledes
 
 
 
+    def attributes
+      ATTRS.inject({}) do |result, attr|
+        result[attr] = instance_variable_get "@#{attr}"
+        result
+      end
+    end
+
 
     private 
 
