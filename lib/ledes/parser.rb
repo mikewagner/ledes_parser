@@ -75,7 +75,5 @@ module Ledes
       Hash[HEADERS.keys.zip line.split('|')]
     end
 
-
-
   end
 end
