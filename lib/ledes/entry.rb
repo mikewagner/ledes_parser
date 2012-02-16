@@ -36,6 +36,9 @@ module Ledes
 
 
 
+
+    private 
+
     def attributes=(attrs)
       return if attrs.empty?
       attrs.each_pair do |key, value|
