@@ -49,9 +49,10 @@ module Ledes
     def parse
       raise InvalidFormat, 'File contains incorrect format specification' unless valid_format?
       raise InvalidHeader, 'File contains invalid header information'  unless valid_header?
-      contents[2, contents.length].map do |line|
+      entries = contents[2, contents.length].map do |line|
         Ledes::Entry.new map_line_to_headers(line)
       end
+      entries
     end
 
     def contents
