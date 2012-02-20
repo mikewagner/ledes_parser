@@ -30,29 +30,30 @@ module Ledes
       :client_matter_id => 'CLIENT_MATTER_ID'
     }
 
-    attr_accessor :input
+    attr_accessor :input, :entries
 
     class << self
       
       def parse(input)
         parser = new(input)
         parser.parse
-        parser 
+        parser
       end
 
     end
 
     def initialize(input)
       @input = input
+      @entries = []
     end
 
     def parse
       raise InvalidFormat, 'File contains incorrect format specification' unless valid_format?
       raise InvalidHeader, 'File contains invalid header information'  unless valid_header?
-      entries = contents[2, contents.length].map do |line|
+      @entries = contents[2, contents.length].map do |line|
         Ledes::Entry.new map_line_to_headers(line)
       end
-      entries
+      @entries
     end
 
     def contents
